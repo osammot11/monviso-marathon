@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $title ?? 'Francigena Ultra Marathon' }}</title>
-    <meta name="description" content="{{ $description ?? 'Walking Francigena Ultra Marathon: cammino non competitivo da Siena ad Acquapendente, con tratte dai 15 ai 130 km.' }}">
+    <title>{{ $title ?? 'Pescara Half Marathon 2027' }}</title>
+    <meta name="description" content="{{ $description ?? 'Pescara Half Marathon 2027: mezza maratona, 10 km e passeggiata sul lungomare di Pescara.' }}">
     @isset($canonical)
         <link rel="canonical" href="{{ $canonical }}">
     @endisset
-    <link rel="icon" type="image/jpeg" href="/images/francigena/logo-francigena.jpg">
+    <link rel="icon" type="image/jpeg" href="/images/pescara/favicon.jpg">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ $title ?? 'Francigena Ultra Marathon' }}">
-    <meta property="og:description" content="{{ $description ?? 'Walking Francigena Ultra Marathon: cammino non competitivo da Siena ad Acquapendente, con tratte dai 15 ai 130 km.' }}">
+    <meta property="og:title" content="{{ $title ?? 'Pescara Half Marathon 2027' }}">
+    <meta property="og:description" content="{{ $description ?? 'Pescara Half Marathon 2027: mezza maratona, 10 km e passeggiata sul lungomare di Pescara.' }}">
     <meta property="og:url" content="{{ $canonical ?? url()->current() }}">
-    <meta property="og:image" content="https://www.francigenaultramarathon.com/wp-content/uploads/2026/03/Bozza-aggiornamento-sito-WFU-2025-13-2048x1151.png">
+    <meta property="og:image" content="{{ url('/images/pescara/logo.png') }}">
     <meta property="og:locale" content="it_IT">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $title ?? 'Francigena Ultra Marathon' }}">
-    <meta name="twitter:description" content="{{ $description ?? 'Walking Francigena Ultra Marathon: cammino non competitivo da Siena ad Acquapendente, con tratte dai 15 ai 130 km.' }}">
-    <meta name="twitter:image" content="https://www.francigenaultramarathon.com/wp-content/uploads/2026/03/Bozza-aggiornamento-sito-WFU-2025-13-2048x1151.png">
+    <meta name="twitter:title" content="{{ $title ?? 'Pescara Half Marathon 2027' }}">
+    <meta name="twitter:description" content="{{ $description ?? 'Pescara Half Marathon 2027: mezza maratona, 10 km e passeggiata sul lungomare di Pescara.' }}">
+    <meta name="twitter:image" content="{{ url('/images/pescara/logo.png') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,10 +29,11 @@
 
     <link rel="stylesheet" href="/style.css?v=62">
     <link rel="stylesheet" href="/iscritti-home.css?v=1.3">
+    <link rel="stylesheet" href="/pescara.css?v=1.0">
     @stack('head')
 </head>
 
-<body class="has-topbar sgranar-theme {{ $bodyClass ?? '' }}">
+<body class="{{ $bodyClass ?? '' }}">
     <div class="site-header">        
         @include('partials.navbar')
     </div>

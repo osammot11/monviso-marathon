@@ -1,33 +1,8 @@
-<link rel="stylesheet" href="/navbar/navbar.css?v=3.5">
-<script src="/navbar/navbar.js?v=2" defer></script>
-
-<nav class="navbar">
-    <div class="hamburger" onclick="openMenu()">
-        <svg class="hamburger-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 5h16"/>
-            <path d="M4 12h16"/>
-            <path d="M4 19h16"/>
-        </svg>
-    </div>
-
-    <div class="logo">
-        <h5 style="color: white;">FRANCIGENA ULTRA MARATHON</h5>
+<nav class="phm-navbar" aria-label="Navigazione principale">
+    <a href="/" class="phm-brand"><img src="/images/pescara/logo.png" alt="Pescara Half Marathon 2027"></a>
+    <button class="phm-menu-toggle" type="button" aria-expanded="false" aria-controls="phm-menu" onclick="togglePhmMenu(this)">☰</button>
+    <div id="phm-menu" class="phm-menu">
+        <a href="/#percorso">Percorso</a><a href="/#quote">Quote</a><a href="/#sponsor">Sponsor</a><a href="/regolamento">Regolamento</a><a href="/contattaci">Contatti</a><a href="/iscrizione" class="phm-menu__cta">Iscriviti</a>
     </div>
 </nav>
-
-<div id="sideMenu" class="side-menu">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">
-        <svg class="close-x-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 6 6 18"/>
-            <path d="m6 6 12 12"/>
-        </svg>
-    </a>
-
-    <a class="hamburger-menu-link" href="/">Homepage</a>
-    <a class="hamburger-menu-link" href="/iscrizione">Iscrizione</a>
-    <a class="hamburger-menu-link" href="/#programma">Programma</a>
-    <a class="hamburger-menu-link" href="/#percorsi">Tratte</a>
-    <a class="hamburger-menu-link" href="/regolamento">Regolamento</a>
-    <a class="hamburger-menu-link" href="/contattaci">Contattaci</a>
-    <a class="hamburger-menu-link" href="/partnership">Partnership</a>
-</div>
+<script>function togglePhmMenu(button){const menu=document.getElementById('phm-menu');const isOpen=menu.classList.toggle('is-open');button.setAttribute('aria-expanded',String(isOpen));button.textContent=isOpen?'×':'☰';}</script>

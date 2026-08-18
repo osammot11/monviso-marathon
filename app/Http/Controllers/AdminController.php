@@ -38,7 +38,7 @@ class AdminController extends Controller
         }
 
         $activeTickets = $query->orderBy('created_at', 'desc')->get();
-        $currentPrice = \App\Models\Setting::where('key', 'ticket_price')->value('value') ?? 26.00;
+        $currentPrice = (float) (\App\Models\Setting::where('key', 'ticket_price')->value('value') ?? 30.00);
         $totalRevenue = $activeTickets->sum('price_paid');
 
         return view('admin.dashboard', compact('activeTickets', 'currentPrice', 'totalRevenue'));
@@ -222,7 +222,8 @@ class AdminController extends Controller
         ]);
 
         $count = 0;
-        $currentPrice = \App\Models\Setting::where('key', 'ticket_price')->value('value') ?? 26.00;
+        $currentPrice = (float) (\App\Models\Setting::where('key', 'ticket_price')->value('value') ?? 30.00);
+        $routePrices = ['21KM Competitiva' => $currentPrice, '10KM non Competitiva' => 10.00, '5KM Passeggiata' => 5.00];
 
         // 5. Leggiamo riga per riga (Ora con TUTTE le 18 colonne)
         while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
@@ -247,6 +248,11 @@ class AdminController extends Controller
                 }
             }
 
+            $routeChoice = trim($row[3]) ?: '21KM Competitiva';
+            if (!array_key_exists($routeChoice, $routePrices)) {
+                $routeChoice = '21KM Competitiva';
+            }
+
             $order->tickets()->create([
                 // Dati Anagrafici Base
                 'first_name' => trim($row[0]) ?: 'Sconosciuto',
@@ -254,7 +260,7 @@ class AdminController extends Controller
                 'email' => trim($row[2]) ?: 'no-email@test.com',
                 
                 // Scelte Maratona
-                'route_choice' => trim($row[3]) ?: 'Tratte brevi',
+                'route_choice' => $routeChoice,
                 'tshirt_size' => trim($row[9]) ?: 'L',
                 
                 // Dati di Nascita e Documenti
@@ -277,7 +283,7 @@ class AdminController extends Controller
                 'celiac' => $isTrue($row[17]),
                 
                 // Dati di Sistema
-                'price_paid' => $currentPrice,
+                'price_paid' => $routePrices[$routeChoice],
                 'payment_tag' => 'Importato CSV',
                 'status' => 'in-approvazione', 
             ]);
@@ -329,7 +335,7 @@ class AdminController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'route_choice' => 'required|in:Grande Sfida 130 km,Tratte intermedie,Tratte brevi',
+            'route_choice' => 'required|in:21KM Competitiva,10KM non Competitiva,5KM Passeggiata',
             'dob' => 'required|date',
             'birth_place' => 'required|string|max:255',
             'residence_address' => 'required|string|max:255',

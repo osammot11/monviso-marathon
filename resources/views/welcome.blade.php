@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iscrizione Francigena Ultra Marathon</title>
+    <title>Iscrizione Pescara Half Marathon 2027</title>
     <link rel="stylesheet" href="{{ asset('css/style.css?v=1.8') }}">
 </head>
 <body class="center-items checkout-body">
 
     <div class="checkout-wrapper stack-large">
-        <h1 class="center-text">Iscrizione Francigena Ultra Marathon</h1>
+        <a href="/" class="checkout-logo"><img src="/images/pescara/logo.png" alt="Pescara Half Marathon 2027"></a>
+        <h1 class="center-text">Iscrizione Pescara Half Marathon 2027</h1>
+        <p class="center-text checkout-intro">16 maggio 2027 · scegli la distanza e registra i partecipanti.</p>
 
         <form action="{{ route('checkout.store') }}" method="POST" id="marathon-form">
             @if($errors->any())
@@ -53,10 +55,12 @@
                         <div class="label-box">
                             <label>Scelta del percorso</label>
                             <select name="tickets[0][route_choice]" required>
-                                <option value="">Scelta tratta</option>
-                                <option value="Grande Sfida 130 km" {{ request('percorso') == 'Grande Sfida 130 km' ? 'selected' : '' }}>Grande Sfida - 130 km</option>
-                                <option value="Tratte intermedie" {{ request('percorso') == 'Tratte intermedie' ? 'selected' : '' }}>Tratte intermedie</option>
-                                <option value="Tratte brevi" {{ request('percorso') == 'Tratte brevi' ? 'selected' : '' }}>Tratte brevi</option>
+                                <option value="">Scegli la distanza</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->name }}" {{ request('percorso') == $category->name ? 'selected' : '' }}>
+                                        {{ $category->name }} · € {{ number_format($category->current_price, 2, ',', '.') }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -168,11 +172,28 @@
             <div class="stack-mid">
               <div class="label-box top-margin-xl">
                   <label>Metodo di Pagamento</label>
-                  <select name="payment_method">
+                  <select name="payment_method" id="payment-method" required>
                       <option value="stripe">Carta</option>
                       <option value="paypal">PayPal</option>
+                      @if($bankTransferAvailable)
+                          <option value="bank_transfer">Bonifico bancario guidato</option>
+                      @endif
                   </select>
               </div>
+
+              @if($bankTransferAvailable)
+                  <div id="bank-contact" class="grid-2 gap-20" hidden>
+                      <div class="label-box">
+                          <label>Referente della prenotazione</label>
+                          <input type="text" name="payment_contact_name" maxlength="255" autocomplete="name">
+                      </div>
+                      <div class="label-box">
+                          <label>Email del referente</label>
+                          <input type="email" name="payment_contact_email" maxlength="255" autocomplete="email">
+                      </div>
+                      <p class="grid-span-all">Riceverai istruzioni, promemoria e un link sicuro per gestire l'intero ordine. Il posto resta riservato per cinque giorni.</p>
+                  </div>
+              @endif
             
               <label>
                   <input type="checkbox" value="1" checked required>Procedendo al pagamento dichiaro di accettare la <a href="/privacy-policy">privacy policy</a> e il <a href="/regolamento">regolamento</a> dell'evento
@@ -216,13 +237,13 @@
             const regionSelect = block.querySelector('.region-select');
             regionSelect.innerHTML = '<option value="">Seleziona Regione</option>';
             Object.keys(italyLocations).sort().forEach(region => {
-                const isSelected = region === 'Toscana' ? 'selected' : '';
+                const isSelected = region === 'Abruzzo' ? 'selected' : '';
                 regionSelect.innerHTML += `<option value="${region}" ${isSelected}>${region}</option>`;
             });
             updateProvinces(regionSelect, true);
         }
 
-        function updateProvinces(regionSelect, setSienaDefault = false) {
+        function updateProvinces(regionSelect, setPescaraDefault = false) {
             const block = regionSelect.closest('.ticket-block');
             const provinceSelect = block.querySelector('.province-select');
             const region = regionSelect.value;
@@ -230,7 +251,7 @@
             provinceSelect.innerHTML = '<option value="">Seleziona Provincia</option>';
             if (italyLocations[region]) {
                 italyLocations[region].sort().forEach(prov => {
-                    const isSelected = (setSienaDefault && prov === 'Siena') ? 'selected' : '';
+                    const isSelected = (setPescaraDefault && prov === 'Pescara') ? 'selected' : '';
                     provinceSelect.innerHTML += `<option value="${prov}" ${isSelected}>${prov}</option>`;
                 });
             }
@@ -279,21 +300,22 @@
         }
 
         function updateTotal() {
-            const basePrice = {{ $currentPrice }};
-            const finalPricePerTicket = basePrice;
-
             const ticketBlocks = document.querySelectorAll('.ticket-block');
-            const count = ticketBlocks.length;
-
-            const freeTickets = Math.floor(count / 11);
-            const paidTickets = count - freeTickets;
-            const total = paidTickets * finalPricePerTicket;
+            const prices = @json($categories->pluck('current_price', 'name')->map(fn ($price) => (float) $price));
+            let total = 0;
+            ticketBlocks.forEach((block, index) => {
+                const route = block.querySelector('[name*="[route_choice]"]').value;
+                if ((index + 1) % 11 !== 0) total += prices[route] ?? 0;
+                if (block.querySelector('input[name*="[shuttle_needed]"][type="checkbox"]')?.checked) {
+                    total += Number(@json($shuttleAddonPrice));
+                }
+            });
 
             const btn = document.getElementById('payment-button');
             btn.innerText = `Procedi al Pagamento - ${total}€`;
         }
 
-        let participantCount = 1;
+        let participantCount = 0;
 
         function addParticipant() {
             const container = document.getElementById('tickets-container');
@@ -351,6 +373,21 @@
             const firstBlock = document.querySelector('.ticket-block');
             populateRegions(firstBlock);
             updateTotal();
+            document.getElementById('tickets-container').addEventListener('change', function(event) {
+                if (event.target.name && (event.target.name.includes('[route_choice]') || event.target.name.includes('[shuttle_needed]'))) updateTotal();
+            });
+
+            const paymentMethod = document.getElementById('payment-method');
+            const bankContact = document.getElementById('bank-contact');
+            if (bankContact) {
+                const toggleBankContact = () => {
+                    const enabled = paymentMethod.value === 'bank_transfer';
+                    bankContact.hidden = !enabled;
+                    bankContact.querySelectorAll('input').forEach(input => input.required = enabled);
+                };
+                paymentMethod.addEventListener('change', toggleBankContact);
+                toggleBankContact();
+            }
         });
     </script>
 </body>

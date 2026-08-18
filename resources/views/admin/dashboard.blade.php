@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Francigena Ultra Marathon</title>
+    <title>Admin - Pescara Half Marathon</title>
     <link rel="stylesheet" href="{{ asset('css/style.css?v=1.7') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -47,6 +47,7 @@
                 <div class="bg-white p-6 rounded-lg shadow">
                     <h3 class="font-bold text-lg mb-4">Creazione biglietti manuale</h3>
                     <a href="{{ route('admin.pending') }}" class="block text-center w-full bg-blue-100 text-blue-800 font-bold py-2 rounded mb-2 hover:bg-blue-200 transition">Gestione CSV & In Attesa</a>
+                    <a href="{{ route('admin.bank.index') }}" class="block text-center w-full bg-amber-100 text-amber-900 font-bold py-2 rounded mb-2 hover:bg-amber-200 transition">Bonifici e riconciliazione</a>
                     <a href="{{ route('admin.create_ticket_form') }}" class="block text-center w-full bg-green-100 text-green-800 font-bold py-2 rounded hover:bg-green-200 transition">Crea Biglietto Singolo</a>
                 </div>
 

@@ -24,7 +24,7 @@ class CheckoutController extends Controller
             // ... [qui lascia tutta la validazione dei tickets.* che avevamo prima] ...
             'tickets.*.first_name' => 'required|string|max:255',
             'tickets.*.last_name' => 'required|string|max:255',
-            'tickets.*.route_choice' => 'required|in:Grande Sfida 130 km,Tratte intermedie,Tratte brevi',
+            'tickets.*.route_choice' => 'required|in:21KM Competitiva,10KM non Competitiva,5KM Passeggiata',
             'tickets.*.dob' => 'required|date',
             'tickets.*.birth_place' => 'required|string|max:255',
             'tickets.*.residence_address' => 'required|string|max:255',
@@ -42,7 +42,7 @@ class CheckoutController extends Controller
         ]);
 
         // 2. Calcolo del prezzo e dello Sconto
-        $basePrice = 26.00;
+        $basePrice = 30.00;
         $discountAmount = 0;
 
         // Se l'utente ha inserito un codice, verifichiamo che esista
@@ -63,7 +63,7 @@ class CheckoutController extends Controller
 
         // 3. Creazione Ordine
         $order = Order::create([
-            'group_code' => 'WFU_' . strtoupper(\Illuminate\Support\Str::random(10)), 
+            'group_code' => 'PHM_' . strtoupper(\Illuminate\Support\Str::random(10)),
             'total_amount' => $totalAmount,
             'payment_method' => $validatedData['payment_method'],
             'is_sports_association' => $request->has('is_sports_association'),
@@ -105,7 +105,7 @@ class CheckoutController extends Controller
                 'price_data' => [
                     'currency' => 'eur',
                     'product_data' => [
-                        'name' => 'Iscrizione Francigena Ultra Marathon - ' . $ticket->first_name . ' ' . $ticket->last_name,
+                        'name' => 'Iscrizione Pescara Half Marathon 2027 - ' . $ticket->first_name . ' ' . $ticket->last_name,
                         'description' => 'Taglia maglia: ' . $ticket->tshirt_size,
                     ],
                     // ECCO LA MAGIA: Moltiplichiamo il prezzo pagato per 100 (Stripe vuole i centesimi)
@@ -207,7 +207,7 @@ class CheckoutController extends Controller
         $pdf = Pdf::loadView('pdf.ticket', compact('ticket'));
         
         // Nome file pulito: Biglietto_Nome_Cognome.pdf
-        $fileName = 'Biglietto_Francigena_' . str_replace(' ', '_', $ticket->last_name) . '.pdf';
+        $fileName = 'Biglietto_Pescara_Half_Marathon_' . str_replace(' ', '_', $ticket->last_name) . '.pdf';
         
         return $pdf->download($fileName);
     }

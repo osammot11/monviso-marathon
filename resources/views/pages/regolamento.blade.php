@@ -4,7 +4,7 @@
     <main>
         <section>
             <h1>Regolamento</h1>
-            <p class="top-margin-large">La Walking Francigena Ultra Marathon è un evento non competitivo. L’iscrizione comporta l’accettazione delle indicazioni organizzative comunicate prima e durante l’evento.</p>
+            <p class="top-margin-large">Pescara Half Marathon comprende la 21KM competitiva, la 10KM non competitiva e la passeggiata 5KM. L’iscrizione comporta l’accettazione delle indicazioni organizzative comunicate prima e durante l’evento.</p>
         </section>
 
         <section class="grid-2">
@@ -13,8 +13,8 @@
                 <p class="top-margin-large">Ogni partecipante deve essere munito di biglietto nominale, digitale o cartaceo, e presentarlo al controllo dello staff.</p>
             </div>
             <div class="card">
-                <h2>Tratte</h2>
-                <p class="top-margin-large">La demo prevede tre macro-scelte: Grande Sfida 130 km, Tratte intermedie e Tratte brevi. Dettagli e orari possono essere aggiornati dallo staff per esigenze organizzative.</p>
+                <h2>Distanze</h2>
+                <p class="top-margin-large">Sono previste tre proposte: 21KM competitiva, 10KM non competitiva e passeggiata 5KM. Per la gara competitiva sono richiesti tesseramento e certificato medico agonistico validi.</p>
             </div>
             <div class="card">
                 <h2>Responsabilità</h2>
@@ -22,7 +22,7 @@
             </div>
             <div class="card">
                 <h2>Biglietti</h2>
-                <p class="top-margin-large">Il biglietto è personale. Per richieste amministrative o fatture scrivi a <a class="hyperlink" href="mailto:info@francigenaultramarathon.com">info@francigenaultramarathon.com</a>.</p>
+                <p class="top-margin-large">Il biglietto è personale. Per richieste amministrative o fatture scrivi a <a class="hyperlink" href="mailto:info@pescarahalfmarathon.it">info@pescarahalfmarathon.it</a>.</p>
             </div>
         </section>
     </main>

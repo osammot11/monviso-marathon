@@ -13,7 +13,7 @@ class OrderPaymentFinalizer
         $order->loadMissing('tickets');
 
         if ($order->status !== 'paid') {
-            $order->update(['status' => 'paid']);
+            $order->update(['status' => 'paid', 'paid_at' => $order->paid_at ?? now()]);
         }
 
         foreach ($order->tickets as $ticket) {

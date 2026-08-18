@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crea Biglietto Manuale - Francigena Ultra Marathon</title>
+    <title>Crea Biglietto Manuale - Pescara Half Marathon</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-6">
@@ -59,10 +59,10 @@
                 <h3 class="font-bold text-lg mb-4 text-blue-600">Opzioni Gara</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                     <select name="route_choice" required class="border p-2 rounded">
-                        <option value="">-- Scelta Tratta --</option>
-                        <option value="Grande Sfida 130 km" {{ old('route_choice') == 'Grande Sfida 130 km' ? 'selected' : '' }}>Grande Sfida - 130 km</option>
-                        <option value="Tratte intermedie" {{ old('route_choice') == 'Tratte intermedie' ? 'selected' : '' }}>Tratte intermedie</option>
-                        <option value="Tratte brevi" {{ old('route_choice') == 'Tratte brevi' ? 'selected' : '' }}>Tratte brevi</option>
+                        <option value="">-- Scelta distanza --</option>
+                        <option value="21KM Competitiva" {{ old('route_choice') == '21KM Competitiva' ? 'selected' : '' }}>21KM Competitiva</option>
+                        <option value="10KM non Competitiva" {{ old('route_choice') == '10KM non Competitiva' ? 'selected' : '' }}>10KM non Competitiva</option>
+                        <option value="5KM Passeggiata" {{ old('route_choice') == '5KM Passeggiata' ? 'selected' : '' }}>5KM Passeggiata</option>
                     </select>
 
                     <select name="tshirt_size" required class="border p-2 rounded">

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendBankTransferInstructions;
 use App\Models\Order;
 use App\Models\Ticket;
+use App\Services\BankTransferService;
+use App\Services\CategoryCapacityService;
 use App\Services\OrderPaymentFinalizer;
+use App\Services\OrderPricingService;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -15,11 +19,13 @@ use Throwable;
 
 class CheckoutController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, BankTransferService $bankTransfer, CategoryCapacityService $capacity, OrderPricingService $pricing)
     {
         // 1. Validazione massiccia
         $validatedData = $request->validate([
-            'payment_method' => 'required|in:stripe,paypal',
+            'payment_method' => 'required|in:stripe,paypal,bank_transfer',
+            'payment_contact_name' => 'required_if:payment_method,bank_transfer|nullable|string|max:255',
+            'payment_contact_email' => 'required_if:payment_method,bank_transfer|nullable|email|max:255',
             'is_sports_association' => 'boolean',
             'association_name' => 'required_if:is_sports_association,1|nullable|string|max:255',
             'is_mutua_member' => 'boolean', 
@@ -27,7 +33,7 @@ class CheckoutController extends Controller
             'tickets.*.first_name' => 'required|string|max:255',
             'tickets.*.last_name' => 'required|string|max:255',
             'tickets.*.codice_fiscale' => 'nullable|string|max:16', 
-            'tickets.*.route_choice' => 'required|in:Grande Sfida 130 km,Tratte intermedie,Tratte brevi',
+            'tickets.*.route_choice' => 'required|in:21KM Competitiva,10KM non Competitiva,5KM Passeggiata',
             'tickets.*.dob' => 'required|date',
             'tickets.*.birth_place' => 'required|string|max:255',
             'tickets.*.residence_address' => 'required|string|max:255',
@@ -44,27 +50,19 @@ class CheckoutController extends Controller
             'tickets.*.celiac' => 'required|boolean',
         ]);
 
-        // 2. Calcolo del prezzo
-        // Leggiamo il prezzo dal database. Se non dovesse esistere, usiamo 28.00 come paracadute.
-        $basePrice = \App\Models\Setting::where('key', 'ticket_price')->value('value') ?? 28.00;
-        $discountAmount = 0;
         $appliedDiscountLabel = null;
-
-        // Prezzo standard per i biglietti paganti
-        $finalPricePerTicket = max(0, $basePrice - $discountAmount);
 
         // --- LOGICA PROMO GRUPPI (Ogni 11 biglietti, 1 è gratis) ---
         $totalTickets = count($validatedData['tickets']);
         $freeTicketsCount = floor($totalTickets / 11);
-        $paidTicketsCount = $totalTickets - $freeTicketsCount;
-
-        // Il totale dell'ordine si calcola ESCLUSIVAMENTE sui biglietti paganti
-        $totalAmount = $paidTicketsCount * $finalPricePerTicket;
-
         if ($validatedData['payment_method'] === 'stripe' && (blank(config('services.stripe.secret')) || blank(config('services.stripe.key')))) {
             return back()
                 ->withInput()
                 ->withErrors(['payment_method' => 'Stripe non è configurato: controlla STRIPE_SECRET e STRIPE_KEY nel file .env oppure la configurazione Laravel in cache.']);
+        }
+
+        if ($validatedData['payment_method'] === 'bank_transfer' && ! $bankTransfer->isAvailable()) {
+            return back()->withInput()->withErrors(['payment_method' => 'Il bonifico non è disponibile o non è ancora configurato.']);
         }
 
         // Aggiungiamo l'etichetta se è scattata la promo
@@ -74,36 +72,62 @@ class CheckoutController extends Controller
         }
 
         // 3. Creazione Ordine e Biglietti
-        $order = DB::transaction(function () use ($request, $validatedData, $appliedDiscountLabel, $totalAmount, $finalPricePerTicket) {
-            $order = Order::create([
-                'group_code' => 'WFU_' . strtoupper(\Illuminate\Support\Str::random(10)),
+        $creation = DB::transaction(function () use ($request, $validatedData, $appliedDiscountLabel, $bankTransfer, $capacity, $pricing) {
+            $categories = $capacity->lockAndResolve($validatedData['tickets']);
+            $totalAmount = collect($validatedData['tickets'])
+                ->values()
+                ->map(function (array $ticket, int $index) use ($categories, $pricing) {
+                    $base = (($index + 1) % 11 === 0) ? 0 : $pricing->categoryPrice($categories[$ticket['route_choice']]);
+                    return $base + $pricing->addonAmount($ticket);
+                })
+                ->sum();
+            $bankPrepared = $validatedData['payment_method'] === 'bank_transfer'
+                ? $bankTransfer->prepareOrderAttributes($validatedData['payment_contact_name'], $validatedData['payment_contact_email'])
+                : ['attributes' => [], 'public_token' => null];
+
+            $order = Order::create(array_merge([
+                'group_code' => 'PHM_' . strtoupper(\Illuminate\Support\Str::random(10)),
                 'total_amount' => $totalAmount,
                 'payment_method' => $validatedData['payment_method'],
                 'is_sports_association' => $request->has('is_sports_association'),
                 'association_name' => $validatedData['association_name'] ?? null,
                 'discount_code' => $appliedDiscountLabel,
                 'status' => 'pending',
-            ]);
+            ], $bankPrepared['attributes']));
 
             foreach ($validatedData['tickets'] as $index => $data) {
                 // L'undicesimo biglietto (indice 10, 21, 32...) ha prezzo 0€
                 $isFreeTicket = (($index + 1) % 11 == 0);
-                $ticketPrice = $isFreeTicket ? 0 : $finalPricePerTicket;
+                $category = $categories[$data['route_choice']];
+                $basePrice = $isFreeTicket ? 0 : $pricing->categoryPrice($category);
+                $addonAmount = $pricing->addonAmount($data);
+                $ticketPrice = $basePrice + $addonAmount;
 
                 $order->tickets()->create(array_merge($data, [
+                    'event_category_id' => $category->id,
                     'unique_ticket_code' => null,
                     'price_paid' => $ticketPrice,
+                    'base_price' => $basePrice,
+                    'addon_amount' => $addonAmount,
                     'payment_tag' => ucfirst($validatedData['payment_method']),
                     'status' => 'pending',
                 ]));
             }
 
-            return $order;
+            return ['order' => $order, 'public_token' => $bankPrepared['public_token']];
         });
+        $order = $creation['order'];
+        $totalAmount = (float) $order->total_amount;
 
         // 5. Redirect Pagamento
         if ($totalAmount == 0) {
+            app(OrderPaymentFinalizer::class)->finalize($order);
             return redirect()->route('checkout.success', ['order_code' => $order->group_code]);
+        }
+
+        if ($validatedData['payment_method'] === 'bank_transfer') {
+            SendBankTransferInstructions::dispatch($order->id);
+            return redirect()->route('booking.show', ['token' => $creation['public_token']]);
         }
 
         try {
@@ -205,7 +229,7 @@ class CheckoutController extends Controller
             'amount' => (int) round($order->total_amount * 100),
             'currency' => 'eur',
             'payment_method_types' => ['card'],
-            'description' => 'Iscrizione Francigena Ultra Marathon - Ordine ' . $order->group_code,
+            'description' => 'Iscrizione Pescara Half Marathon 2027 - Ordine ' . $order->group_code,
             'receipt_email' => $firstTicket?->email,
             'metadata' => [
                 'order_id' => (string) $order->id,
@@ -337,7 +361,7 @@ class CheckoutController extends Controller
         }
 
         $pdf = Pdf::loadView('pdf.ticket', compact('ticket'));
-        $fileName = 'Biglietto_Francigena_' . str_replace(' ', '_', $ticket->last_name) . '.pdf';
+        $fileName = 'Biglietto_Pescara_Half_Marathon_' . str_replace(' ', '_', $ticket->last_name) . '.pdf';
         
         return $pdf->download($fileName);
     }
