@@ -3,15 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iscrizione Pescara Half Marathon 2027</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css?v=1.8') }}">
+    <title>Iscrizione | 100 Miglia Monviso 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css?v=2.0') }}">
 </head>
-<body class="center-items checkout-body">
+<body class="checkout-body monviso-checkout">
+
+    <nav class="registration-nav">
+        <a href="/" class="checkout-logo"><img src="/images/monviso/logo.png" alt="100 Miglia Monviso"></a>
+        <a href="/" class="registration-back">← Torna al sito</a>
+    </nav>
+
+    <header class="registration-hero">
+        <div class="registration-hero__inner">
+            <p class="registration-eyebrow">Iscrizioni 2026</p>
+            <h1>Scegli la sfida.<br><em>Entra nella leggenda.</em></h1>
+            <p>17—19 luglio · Terres Monviso, Piemonte</p>
+        </div>
+    </header>
+
+    <div class="registration-layout">
+    <aside class="registration-aside">
+        <p class="registration-eyebrow">Il tuo percorso</p>
+        <h2>Iscrizione atleta</h2>
+        <ol class="registration-steps"><li class="is-active"><b>01</b><span>Gara e dati atleta</span></li><li><b>02</b><span>Requisiti sportivi</span></li><li><b>03</b><span>Pagamento</span></li></ol>
+        <div class="registration-note"><strong>Prima di iniziare</strong><p>Tieni a portata di mano tessera sportiva e data di scadenza del certificato medico agonistico.</p></div>
+        <a href="{{ route('booking.index') }}" class="registration-manage">Hai già una prenotazione? Gestiscila →</a>
+    </aside>
 
     <div class="checkout-wrapper stack-large">
-        <a href="/" class="checkout-logo"><img src="/images/pescara/logo.png" alt="Pescara Half Marathon 2027"></a>
-        <h1 class="center-text">Iscrizione Pescara Half Marathon 2027</h1>
-        <p class="center-text checkout-intro">16 maggio 2027 · scegli la distanza e registra i partecipanti.</p>
+        <div class="registration-form-heading"><p class="registration-eyebrow">Dati di iscrizione</p><h2>Registra i partecipanti</h2><p>Scegli la gara e compila i dati richiesti per ogni atleta.</p></div>
 
         <form action="{{ route('checkout.store') }}" method="POST" id="marathon-form">
             @if($errors->any())
@@ -26,7 +49,7 @@
             @endif
             @csrf
 
-            <div class="box-associazione stack-mid">
+            <div class="box-associazione stack-mid registration-group-box">
                 <label>
                     <input type="checkbox" name="is_sports_association" value="1" onchange="document.getElementById('assoc_name_div').style.display = this.checked ? 'block' : 'none'">
                     <span>Siamo un'associazione sportiva</span>
@@ -39,7 +62,7 @@
 
             <div id="tickets-container">
                 <div class="ticket-block top-margin-large">
-                    <h3>Partecipante #1</h3>
+                    <div class="participant-heading"><span>Atleta</span><h3>Partecipante #1</h3></div>
 
                     <div class="grid-2 gap-20 top-margin-mid">
                         <div class="label-box">
@@ -53,9 +76,9 @@
                         </div>
 
                         <div class="label-box">
-                            <label>Scelta del percorso</label>
+                            <label>Gara</label>
                             <select name="tickets[0][route_choice]" required>
-                                <option value="">Scegli la distanza</option>
+                                <option value="">Scegli la tua gara</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->name }}" {{ request('percorso') == $category->name ? 'selected' : '' }}>
                                         {{ $category->name }} · € {{ number_format($category->current_price, 2, ',', '.') }}
@@ -80,6 +103,24 @@
                         </div>
 
                         <div class="label-box">
+                            <label>Tesseramento sportivo</label>
+                            <select name="tickets[0][membership_type]" required>
+                                <option value="">Seleziona ente</option>
+                                <option value="FIDAL">FIDAL</option><option value="RunCard">RunCard</option><option value="UISP">UISP</option><option value="CSI">CSI</option><option value="CSEN">CSEN</option><option value="AICS">AICS</option><option value="Altro EPS">Altro EPS</option><option value="Federazione estera">Federazione estera</option>
+                            </select>
+                        </div>
+
+                        <div class="label-box">
+                            <label>Numero tessera</label>
+                            <input type="text" name="tickets[0][membership_number]" placeholder="Numero tessera" required>
+                        </div>
+
+                        <div class="label-box">
+                            <label>Scadenza certificato medico</label>
+                            <input type="date" name="tickets[0][medical_certificate_expiry]" required>
+                        </div>
+
+                        <div class="label-box">
                             <label>Codice fiscale (se cittadino italiano)</label>
                             <input type="text" name="tickets[0][codice_fiscale]" placeholder="Codice Fiscale (Obbligatorio se IT)" oninput="this.value = this.value.toUpperCase()">
                         </div>
@@ -92,6 +133,16 @@
                         <div class="label-box">
                             <label>Telefono</label>
                             <input type="text" name="tickets[0][phone]" placeholder="Telefono" required>
+                        </div>
+
+                        <div class="label-box">
+                            <label>Contatto di emergenza</label>
+                            <input type="text" name="tickets[0][emergency_contact_name]" placeholder="Nome e cognome" required>
+                        </div>
+
+                        <div class="label-box">
+                            <label>Telefono di emergenza</label>
+                            <input type="text" name="tickets[0][emergency_contact_phone]" placeholder="Telefono" required>
                         </div>
 
                         <div class="label-box">
@@ -154,7 +205,7 @@
                     <div class="top-margin-large">
                         <label>
                             <input type="hidden" name="tickets[0][shuttle_needed]" value="0">
-                            <input type="checkbox" name="tickets[0][shuttle_needed]" value="1"> Navetta?
+                            <input type="checkbox" name="tickets[0][shuttle_needed]" value="1"> Richiedo il servizio navetta, se previsto per la gara
                         </label>
 
                         <label>
@@ -165,7 +216,7 @@
                 </div>
             </div>
 
-            <button class="top-margin-large grey-btn" type="button" onclick="addParticipant()">+ Aggiungi un altro partecipante</button>
+            <button class="top-margin-large grey-btn" type="button" onclick="addParticipant()">+ Aggiungi un altro atleta</button>
 
             <input type="hidden" name="is_mutua_member" value="0">
 
@@ -203,9 +254,10 @@
                   <input type="checkbox" value="1" checked required>Acconsento al trattamento dei miei dati particolari relativi alla salute (es. celiachia), forniti volontariamente, al fine di gestire correttamente le esigenze alimentari durante l’evento, ai sensi dell’art. 9 del Regolamento UE 2016/679 (GDPR).
               </label>
 
-              <button class="btn fullwidth" id="payment-button" type="submit">Procedi al Pagamento - {{ $currentPrice }}€</button>
+              <button class="btn fullwidth" id="payment-button" type="submit">Procedi al pagamento</button>
             </div>
         </form>
+    </div>
     </div>
 
     <script>
@@ -237,13 +289,13 @@
             const regionSelect = block.querySelector('.region-select');
             regionSelect.innerHTML = '<option value="">Seleziona Regione</option>';
             Object.keys(italyLocations).sort().forEach(region => {
-                const isSelected = region === 'Abruzzo' ? 'selected' : '';
+                const isSelected = region === 'Piemonte' ? 'selected' : '';
                 regionSelect.innerHTML += `<option value="${region}" ${isSelected}>${region}</option>`;
             });
             updateProvinces(regionSelect, true);
         }
 
-        function updateProvinces(regionSelect, setPescaraDefault = false) {
+        function updateProvinces(regionSelect, setCuneoDefault = false) {
             const block = regionSelect.closest('.ticket-block');
             const provinceSelect = block.querySelector('.province-select');
             const region = regionSelect.value;
@@ -251,7 +303,7 @@
             provinceSelect.innerHTML = '<option value="">Seleziona Provincia</option>';
             if (italyLocations[region]) {
                 italyLocations[region].sort().forEach(prov => {
-                    const isSelected = (setPescaraDefault && prov === 'Pescara') ? 'selected' : '';
+                    const isSelected = (setCuneoDefault && prov === 'Cuneo') ? 'selected' : '';
                     provinceSelect.innerHTML += `<option value="${prov}" ${isSelected}>${prov}</option>`;
                 });
             }

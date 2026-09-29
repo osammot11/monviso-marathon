@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use App\Models\Setting;
+use App\Models\EventCategory;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Str;
 use App\Jobs\SendTicketEmail;
 use Illuminate\Support\Facades\File;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -222,8 +224,8 @@ class AdminController extends Controller
         ]);
 
         $count = 0;
-        $currentPrice = (float) (\App\Models\Setting::where('key', 'ticket_price')->value('value') ?? 30.00);
-        $routePrices = ['21KM Competitiva' => $currentPrice, '10KM non Competitiva' => 10.00, '5KM Passeggiata' => 5.00];
+        $routePrices = EventCategory::where('is_active', true)->pluck('price', 'name')->map(fn ($price) => (float) $price)->all();
+        $defaultRoute = array_key_first($routePrices);
 
         // 5. Leggiamo riga per riga (Ora con TUTTE le 18 colonne)
         while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
@@ -248,9 +250,9 @@ class AdminController extends Controller
                 }
             }
 
-            $routeChoice = trim($row[3]) ?: '21KM Competitiva';
+            $routeChoice = trim($row[3]) ?: $defaultRoute;
             if (!array_key_exists($routeChoice, $routePrices)) {
-                $routeChoice = '21KM Competitiva';
+                $routeChoice = $defaultRoute;
             }
 
             $order->tickets()->create([
@@ -325,7 +327,9 @@ class AdminController extends Controller
     // Mostra il form per creare un biglietto manuale
     public function createTicket()
     {
-        return view('admin.create_ticket');
+        return view('admin.create_ticket', [
+            'categories' => EventCategory::where('is_active', true)->orderBy('sort_order')->get(),
+        ]);
     }
 
     // Salva il biglietto manuale e spedisce l'email
@@ -335,7 +339,7 @@ class AdminController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'route_choice' => 'required|in:21KM Competitiva,10KM non Competitiva,5KM Passeggiata',
+            'route_choice' => ['required', Rule::exists('event_categories', 'name')->where('is_active', true)],
             'dob' => 'required|date',
             'birth_place' => 'required|string|max:255',
             'residence_address' => 'required|string|max:255',
@@ -372,7 +376,9 @@ class AdminController extends Controller
         ]);
 
         // 3. Creiamo il biglietto (Laravel prenderà 'price_paid' direttamente da $validated)
+        $category = EventCategory::where('name', $validated['route_choice'])->firstOrFail();
         $ticket = $order->tickets()->create(array_merge($validated, [
+            'event_category_id' => $category->id,
             'payment_tag' => 'Contanti / Manuale',
             'status' => 'active', 
             'unique_ticket_code' => 'TK_' . strtoupper(Str::random(8)) 

@@ -1,8 +1,8 @@
-<nav class="phm-navbar" aria-label="Navigazione principale">
-    <a href="/" class="phm-brand"><img src="/images/pescara/logo.png" alt="Pescara Half Marathon 2027"></a>
-    <button class="phm-menu-toggle" type="button" aria-expanded="false" aria-controls="phm-menu" onclick="togglePhmMenu(this)">☰</button>
-    <div id="phm-menu" class="phm-menu">
-        <a href="/#percorso">Percorso</a><a href="/#quote">Quote</a><a href="/#sponsor">Sponsor</a><a href="/regolamento">Regolamento</a><a href="/contattaci">Contatti</a><a href="/iscrizione" class="phm-menu__cta">Iscriviti</a>
+<nav class="mm-navbar" aria-label="Navigazione principale">
+    <a href="/" class="mm-brand"><img src="/images/monviso/logo.png" alt="100 Miglia Monviso"></a>
+    <button class="mm-menu-toggle" type="button" aria-expanded="false" aria-controls="mm-menu" onclick="toggleMmMenu(this)"><span></span><span></span></button>
+    <div id="mm-menu" class="mm-menu">
+        <a href="/#gare">Le gare</a><a href="https://www.100migliamonviso.eu/programma/" target="_blank" rel="noopener">Programma</a><a href="/#gallery">Gallery</a><a href="/prenotazione">La mia iscrizione</a><a href="/contattaci">Info</a><a href="https://www.100migliamonviso.eu/language/en/home-en/" class="mm-language" target="_blank" rel="noopener">EN</a><a href="/iscrizione" class="mm-menu__cta">Iscriviti ↗</a>
     </div>
 </nav>
-<script>function togglePhmMenu(button){const menu=document.getElementById('phm-menu');const isOpen=menu.classList.toggle('is-open');button.setAttribute('aria-expanded',String(isOpen));button.textContent=isOpen?'×':'☰';}</script>
+<script>function toggleMmMenu(button){const menu=document.getElementById('mm-menu');const isOpen=menu.classList.toggle('is-open');button.classList.toggle('is-open',isOpen);button.setAttribute('aria-expanded',String(isOpen));}</script>

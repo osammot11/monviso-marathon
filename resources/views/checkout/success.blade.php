@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conferma Iscrizione - Pescara Half Marathon 2027</title>
+    <title>Iscrizione confermata | 100 Miglia Monviso 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-6 md:p-12">
 
     <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="bg-green-600 p-6 text-white text-center">
+        <div class="bg-teal-700 p-6 text-white text-center">
             <h1 class="text-3xl font-bold">Iscrizione Completata!</h1>
-            <p class="mt-2 opacity-90">Grazie per la tua partecipazione alla Pescara Half Marathon 2027.</p>
+            <p class="mt-2 opacity-90">La tua sfida alla 100 Miglia Monviso 2026 comincia qui.</p>
         </div>
 
         <div class="p-8">
@@ -20,7 +20,7 @@
                 <h2 class="text-2xl font-mono font-bold text-gray-800">{{ $order->group_code }}</h2>
             </div>
 
-            <h3 class="text-lg font-bold mb-4 text-gray-700">I tuoi Biglietti Nominativi:</h3>
+            <h3 class="text-lg font-bold mb-4 text-gray-700">I tuoi pettorali nominativi:</h3>
             <div class="space-y-4">
                 @foreach($order->tickets as $ticket)
                     <div class="flex items-center justify-between p-4 border rounded-lg bg-gray-50 hover:bg-gray-100 transition">
@@ -31,7 +31,7 @@
                         </div>
                         
                         <a href="{{ route('ticket.download', $ticket->unique_ticket_code) }}" 
-                           class="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold text-sm transition">
+                           class="flex items-center space-x-2 bg-teal-700 hover:bg-teal-800 text-white px-4 py-2 rounded font-semibold text-sm transition">
                            <span>PDF</span>
                         </a>
                     </div>

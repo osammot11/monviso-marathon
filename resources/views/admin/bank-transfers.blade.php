@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bonifici · Admin Pescara Half Marathon</title>
+    <title>Bonifici · Admin 100 Miglia Monviso</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 p-4 md:p-8 text-slate-800">

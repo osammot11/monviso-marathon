@@ -4,7 +4,7 @@
     <main>
         <section>
             <h1>Privacy Policy</h1>
-            <p class="top-margin-large">Questa informativa descrive in modo sintetico il trattamento dei dati raccolti tramite iscrizioni, pagamenti, comunicazioni e moduli del sito Pescara Half Marathon.</p>
+            <p class="top-margin-large">Questa informativa descrive in modo sintetico il trattamento dei dati raccolti tramite iscrizioni, comunicazioni e moduli del sito 100 Miglia Monviso.</p>
         </section>
 
         <section class="grid-2">
@@ -22,7 +22,7 @@
             </div>
             <div class="card">
                 <h2>Diritti</h2>
-                <p class="top-margin-large">Per richieste di accesso, rettifica o cancellazione puoi scrivere a <a class="hyperlink" href="mailto:info@pescarahalfmarathon.it">info@pescarahalfmarathon.it</a>.</p>
+                <p class="top-margin-large">Per richieste di accesso, rettifica o cancellazione puoi scrivere a <a class="hyperlink" href="mailto:info@100migliamonviso.eu">info@100migliamonviso.eu</a>.</p>
             </div>
         </section>
     </main>

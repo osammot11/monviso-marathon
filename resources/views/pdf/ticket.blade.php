@@ -16,9 +16,9 @@
 <body>
     <div class="ticket-container">
         <div class="header">
-            WALKING FRANCIGENA ULTRA MARATHON 2026
+            100 MIGLIA MONVISO 2026
         </div>
-        <p class="center-text">10/11 OTTOBRE 2026 - DA SIENA AD ACQUAPENDENTE</p>
+        <p class="center-text">17—19 LUGLIO 2026 · TERRES MONVISO</p>
         <div class="details">
             <p><strong>Partecipante:</strong> {{ $ticket->first_name }} {{ $ticket->last_name }}</p>
             <p><strong>Percorso:</strong> {{ $ticket->route_choice }}</p>
@@ -27,13 +27,13 @@
             <p><strong>Navetta:</strong> {{ $ticket->shuttle_needed }}</p>
             <p class="small-p">Legenda per i campi "Celiachia" e "Navetta":<br>0 = NO<br>1 = SÌ</p>
             <p><strong>Importo pagato:</strong> {{ $ticket->price_paid }}€</p>
-            <p class="small-p">Il biglietto funge da ricevuta di pagamento elettronico dell’importo sopra indicato. Nel caso si necessiti di fattura fiscale nominativa, preghiamo di contattare via mail l’indirizzo info@pescarahalfmarathon.it inserendo nell’oggetto il codice biglietto e il tipo di richiesta.</p>
+            <p class="small-p">Il documento funge da ricevuta dell’importo sopra indicato. Per richieste amministrative scrivi a info@100migliamonviso.eu indicando il codice pettorale.</p>
         </div>
         <div class="ticket-code">
-            <p>CODICE BIGLIETTO</p>
+            <p>CODICE PETTORALE</p>
             <p style="font-weight: bold;">{{ $ticket->unique_ticket_code }}</p>
         </div>
-        <p class="small-p center-text">Ti ricordiamo che il biglietto è nominativo, ogni partecipante dovrà esserne munito al momento della partenza. Il formato cartaceo è opzionale, la versione digitale in PDF è accettata dallo staff addetto ai controlli.</p>
+        <p class="small-p center-text">Il pettorale è nominativo. Porta con te questo documento, in formato digitale o cartaceo, al check-in della gara.</p>
     </div>
 </body>
 </html>

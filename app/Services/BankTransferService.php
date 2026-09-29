@@ -27,7 +27,7 @@ class BankTransferService
             'iban' => strtoupper(preg_replace('/\s+/', '', (string) $values->get('bank_iban'))),
             'bic' => strtoupper(trim((string) $values->get('bank_bic'))),
             'bank_name' => trim((string) $values->get('bank_name')),
-            'event_date' => CarbonImmutable::parse($values->get('event_date', '2027-05-16 09:00:00'), 'Europe/Rome'),
+            'event_date' => CarbonImmutable::parse($values->get('event_date', '2026-07-17 21:00:00'), 'Europe/Rome'),
             'cutoff_days' => (int) $values->get('bank_transfer_cutoff_days', 7),
             'reservation_days' => (int) $values->get('bank_transfer_reservation_days', 5),
         ];
@@ -53,8 +53,8 @@ class BankTransferService
             $dueAt = $cutoff;
         }
 
-        $bookingCode = $this->uniqueCode('MAR2027-', 'booking_code');
-        $reference = $this->uniqueCode('PHM27-', 'bank_reference');
+        $bookingCode = $this->uniqueCode('MON26-', 'booking_code');
+        $reference = $this->uniqueCode('MM26-', 'bank_reference');
         $publicToken = Str::random(64);
 
         return [

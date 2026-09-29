@@ -24,6 +24,111 @@
     --font-base: "Figtree", sans-serif;
 }
 
+.checkout-body.monviso-checkout { padding: 0; background: #eeeee7; align-items: stretch; justify-content: flex-start; }
+
+/* 100 Miglia Monviso · registration experience */
+.monviso-checkout {
+    --primary: #168f94;
+    --primary-hover: #0b696d;
+    --primary-soft: #d6f04b;
+    --bg-main: #eeeee7;
+    --bg-secondary: #dbe7e4;
+    --text-main: #101311;
+    --text-secondary: #071817;
+    --border-light: #d5d8d1;
+    min-height: 100vh;
+    background: #eeeee7;
+    color: #101311;
+    font-family: "Manrope", sans-serif;
+}
+
+.monviso-checkout h1,
+.monviso-checkout h2,
+.monviso-checkout h3 { font-family: "Barlow Condensed", sans-serif; }
+
+.registration-nav {
+    height: 82px;
+    padding: 0 max(4vw, 24px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #071817;
+}
+
+.registration-nav .checkout-logo { width: 145px; margin: 0; }
+.registration-nav .checkout-logo img { height: 58px; }
+.registration-back { color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: .14em; font-size: 11px; font-weight: 700; }
+
+.registration-hero {
+    min-height: 420px;
+    padding: 90px max(4vw, 24px) 75px;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    background: linear-gradient(90deg, rgba(4,17,16,.9), rgba(4,17,16,.25)), url('/images/monviso/runner.jpg') center 42% / cover;
+}
+
+.registration-hero__inner { width: min(1320px, 100%); margin: auto; }
+.registration-eyebrow { margin: 0 0 12px; color: #71d1d1; font-size: 11px; font-weight: 700; line-height: 1; letter-spacing: .22em; text-transform: uppercase; }
+.registration-hero h1 { margin: 0; max-width: 800px; font-size: clamp(58px, 8vw, 105px); font-weight: 800; line-height: .8; letter-spacing: -.035em; text-transform: uppercase; }
+.registration-hero h1 em { color: #d6f04b; font-style: normal; }
+.registration-hero__inner > p:last-child { margin-top: 28px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+
+.registration-layout { width: min(1320px, calc(100% - 48px)); margin: 0 auto; padding: 80px 0 120px; display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 60px; align-items: start; }
+.registration-aside { position: sticky; top: 28px; }
+.registration-aside h2 { margin: 0; font-size: 38px; line-height: 1; text-transform: uppercase; }
+.registration-steps { list-style: none; padding: 0; margin: 35px 0; border-top: 1px solid #c4c8c1; }
+.registration-steps li { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid #c4c8c1; color: #7b817c; font-size: 12px; text-transform: uppercase; letter-spacing: .09em; }
+.registration-steps li b { font-family: "Barlow Condensed", sans-serif; font-size: 18px; line-height: 1; }
+.registration-steps li.is-active { color: #101311; }
+.registration-steps li.is-active b { color: #168f94; }
+.registration-note { padding: 22px; background: #d6f04b; }
+.registration-note strong { text-transform: uppercase; font-size: 12px; letter-spacing: .12em; }
+.registration-note p { margin-top: 8px; font-size: 13px; line-height: 1.55; }
+.registration-manage { display: inline-block; margin-top: 22px; color: #0b696d; font-size: 12px; font-weight: 700; text-decoration: none; }
+
+.monviso-checkout .checkout-wrapper { max-width: none; width: 100%; margin: 0; padding: 48px; border-radius: 0; border: 1px solid #d5d8d1; box-shadow: 0 20px 55px rgba(7,24,23,.08); }
+.registration-form-heading { padding-bottom: 35px; border-bottom: 1px solid #d5d8d1; }
+.registration-form-heading h2 { font-size: 52px; line-height: .95; text-transform: uppercase; }
+.registration-form-heading > p:last-child { margin-top: 12px; color: #65706a; font-size: 15px; }
+.registration-group-box { border-radius: 0; border-left: 4px solid #168f94; }
+.monviso-checkout .ticket-block { margin-top: 42px; padding: 34px; border: 1px solid #d5d8d1; background: #fafaf7; }
+.participant-heading { display: flex; align-items: center; gap: 15px; padding-bottom: 22px; border-bottom: 1px solid #d5d8d1; }
+.participant-heading > span { padding: 6px 10px; background: #071817; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+.participant-heading h3 { font-size: 34px; text-transform: uppercase; }
+.monviso-checkout .label-box label { color: #35403a; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.monviso-checkout input,
+.monviso-checkout select { min-height: 50px; border-radius: 0; border-color: #cbd0c9; color: #101311; font-family: "Manrope", sans-serif; font-size: 14px; }
+.monviso-checkout input:focus,
+.monviso-checkout select:focus { border-color: #168f94; box-shadow: 0 0 0 1px #168f94; outline: 0; }
+.monviso-checkout input[type="checkbox"] { min-height: auto; accent-color: #168f94; }
+.monviso-checkout .grey-btn { border: 1px solid #071817; background: transparent; color: #071817; }
+.monviso-checkout .grey-btn:hover { background: #071817; color: #fff; }
+.monviso-checkout .btn { min-height: 58px; background: #d6f04b; border-color: #d6f04b; color: #101311; font-weight: 800; letter-spacing: .1em; }
+.monviso-checkout .btn:hover { background: #bfd638; border-color: #bfd638; }
+.monviso-checkout .bg-primary-hover { padding: 18px; background: #7f1d1d; color: #fff; }
+
+@media (max-width: 920px) {
+    .registration-layout { grid-template-columns: 1fr; gap: 36px; }
+    .registration-aside { position: static; }
+    .registration-steps { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .registration-steps li { border-right: 1px solid #c4c8c1; padding-right: 10px; }
+}
+
+@media (max-width: 640px) {
+    .registration-nav { height: 70px; }
+    .registration-nav .checkout-logo { width: 122px; }
+    .registration-nav .checkout-logo img { height: 50px; }
+    .registration-hero { min-height: 360px; padding-block: 70px 55px; }
+    .registration-hero h1 { font-size: 54px; }
+    .registration-layout { width: min(100% - 28px, 1320px); padding: 48px 0 80px; }
+    .registration-steps { grid-template-columns: 1fr; }
+    .registration-steps li { border-right: 0; }
+    .monviso-checkout .checkout-wrapper { padding: 24px 18px; }
+    .registration-form-heading h2 { font-size: 40px; }
+    .monviso-checkout .ticket-block { padding: 22px 16px; }
+}
+
 .checkout-logo { display:block; width:180px; margin:0 auto 12px; }
 .checkout-logo img { width:100%; height:110px; object-fit:contain; }
 .checkout-intro { color:#64748b; margin-top:8px; }

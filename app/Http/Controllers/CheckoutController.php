@@ -14,6 +14,7 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use RuntimeException;
 use Throwable;
 
@@ -33,7 +34,7 @@ class CheckoutController extends Controller
             'tickets.*.first_name' => 'required|string|max:255',
             'tickets.*.last_name' => 'required|string|max:255',
             'tickets.*.codice_fiscale' => 'nullable|string|max:16', 
-            'tickets.*.route_choice' => 'required|in:21KM Competitiva,10KM non Competitiva,5KM Passeggiata',
+            'tickets.*.route_choice' => ['required', Rule::exists('event_categories', 'name')->where('is_active', true)],
             'tickets.*.dob' => 'required|date',
             'tickets.*.birth_place' => 'required|string|max:255',
             'tickets.*.residence_address' => 'required|string|max:255',
@@ -43,8 +44,13 @@ class CheckoutController extends Controller
             'tickets.*.region' => 'required|string|max:255',
             'tickets.*.country' => 'required|string|max:255',
             'tickets.*.nationality' => 'required|string|max:2',
+            'tickets.*.membership_type' => 'required|string|max:50',
+            'tickets.*.membership_number' => 'required|string|max:100',
+            'tickets.*.medical_certificate_expiry' => 'required|date|after_or_equal:today',
             'tickets.*.email' => 'required|email',
             'tickets.*.phone' => 'required|string|max:20',
+            'tickets.*.emergency_contact_name' => 'required|string|max:255',
+            'tickets.*.emergency_contact_phone' => 'required|string|max:20',
             'tickets.*.tshirt_size' => 'required|in:XS,S,M,L,XL,XXL',
             'tickets.*.shuttle_needed' => 'required|boolean',
             'tickets.*.celiac' => 'required|boolean',
@@ -86,7 +92,7 @@ class CheckoutController extends Controller
                 : ['attributes' => [], 'public_token' => null];
 
             $order = Order::create(array_merge([
-                'group_code' => 'PHM_' . strtoupper(\Illuminate\Support\Str::random(10)),
+                'group_code' => 'MM26_' . strtoupper(\Illuminate\Support\Str::random(10)),
                 'total_amount' => $totalAmount,
                 'payment_method' => $validatedData['payment_method'],
                 'is_sports_association' => $request->has('is_sports_association'),
@@ -229,7 +235,7 @@ class CheckoutController extends Controller
             'amount' => (int) round($order->total_amount * 100),
             'currency' => 'eur',
             'payment_method_types' => ['card'],
-            'description' => 'Iscrizione Pescara Half Marathon 2027 - Ordine ' . $order->group_code,
+            'description' => 'Iscrizione 100 Miglia Monviso 2026 - Ordine ' . $order->group_code,
             'receipt_email' => $firstTicket?->email,
             'metadata' => [
                 'order_id' => (string) $order->id,
@@ -361,7 +367,7 @@ class CheckoutController extends Controller
         }
 
         $pdf = Pdf::loadView('pdf.ticket', compact('ticket'));
-        $fileName = 'Biglietto_Pescara_Half_Marathon_' . str_replace(' ', '_', $ticket->last_name) . '.pdf';
+        $fileName = 'Pettorale_100_Miglia_Monviso_' . str_replace(' ', '_', $ticket->last_name) . '.pdf';
         
         return $pdf->download($fileName);
     }

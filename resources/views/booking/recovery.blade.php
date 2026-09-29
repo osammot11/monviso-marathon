@@ -2,12 +2,12 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recupera prenotazione · Pescara Half Marathon</title>
+    <title>Recupera prenotazione · 100 Miglia Monviso</title>
     <link rel="stylesheet" href="{{ asset('css/style.css?v=1.9') }}">
 </head>
 <body class="center-items checkout-body">
 <main class="checkout-wrapper booking-card stack-large">
-    <a href="/" class="checkout-logo"><img src="/images/pescara/logo.png" alt="Pescara Half Marathon 2027"></a>
+    <a href="/" class="checkout-logo"><img src="/images/monviso/logo.png" alt="100 Miglia Monviso"></a>
     <div><h1>Recupera l'accesso</h1><p>Se l'email corrisponde a una prenotazione, invieremo un codice valido per 10 minuti.</p></div>
     @if($errors->any())<div class="notice notice-error">{{ $errors->first() }}</div>@endif
     <form action="{{ route('booking.otp.send') }}" method="POST" class="stack-mid">

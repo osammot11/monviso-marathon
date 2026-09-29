@@ -2,104 +2,92 @@
 
 @push('head')
     <script type="application/ld+json">
-    {"@@context":"https://schema.org","@@type":"SportsEvent","name":"Pescara Half Marathon 2027","startDate":"2027-05-16T09:00:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://www.pescarahalfmarathon.it/","image":"https://www.pescarahalfmarathon.it/storage/site/logo/KVykCh4mU9tyOUrZue0gxA9pwzRWiNgum6P25SXr.png","description":"Mezza maratona competitiva, 10 km non competitiva e passeggiata sul lungomare di Pescara.","location":{"@@type":"Place","name":"Pescara","address":{"@@type":"PostalAddress","addressLocality":"Pescara","addressRegion":"Abruzzo","addressCountry":"IT"}},"organizer":{"@@type":"Organization","name":"ASD Run4Fun"}}
+    {"@@context":"https://schema.org","@@type":"SportsEvent","name":"100 Miglia Monviso 2026","startDate":"2026-07-17T21:00:00+02:00","endDate":"2026-07-19T23:59:00+02:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","url":"https://www.100migliamonviso.eu/","image":"https://www.100migliamonviso.eu/wp-content/uploads/2024/12/100MM-24_PH-Stefano-Jeantet-52-scaled.jpg","description":"Quattro gare di trail running tra Valle Po, Valle Bronda e Valle Varaita, ai piedi del Monviso.","location":{"@@type":"Place","name":"Terres Monviso","address":{"@@type":"PostalAddress","addressRegion":"Piemonte","addressCountry":"IT"}},"organizer":{"@@type":"Organization","name":"100 Miglia Monviso"}}
     </script>
 @endpush
 
 @section('content')
-    <header class="phm-hero">
-        <video class="phm-hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-            <source src="/images/pescara/hero.mp4" type="video/mp4">
-        </video>
-        <div class="phm-hero__veil"></div>
-        <div class="phm-hero__content">
-            <p class="phm-eyebrow">Domenica 16 maggio 2027 · Pescara</p>
-            <img class="phm-hero__logo" src="/images/pescara/logo.png" alt="Pescara Half Marathon 2027">
-            <p class="phm-hero__copy">Un’occasione imperdibile per correre in uno scenario costiero unico, respirando l’aria del mare e sfidando il proprio cronometro su un tracciato veloce.</p>
-            <div class="phm-countdown" id="countdown" aria-label="Conto alla rovescia per Pescara Half Marathon 2027">
-                <div><strong id="days">000</strong><span>giorni</span></div><b>:</b>
-                <div><strong id="hours">00</strong><span>ore</span></div><b>:</b>
-                <div><strong id="minutes">00</strong><span>min</span></div><b>:</b>
-                <div><strong id="seconds">00</strong><span>sec</span></div>
-            </div>
-            <div class="phm-actions">
-                <a href="#percorso" class="phm-btn phm-btn--ghost">Scopri il percorso ↓</a>
-                <a href="#quote" class="phm-btn phm-btn--light">Scegli la tua quota →</a>
+    <header class="mm-hero">
+        <div class="mm-hero__media" aria-hidden="true"></div>
+        <div class="mm-hero__shade" aria-hidden="true"></div>
+        <div class="mm-shell mm-hero__content">
+            <p class="mm-kicker">Terres Monviso · Piemonte</p>
+            <h1>Due versanti.<br><em>Una sfida.</em></h1>
+            <p class="mm-hero__lead">Un viaggio oltre il limite, lungo sentieri selvaggi e borghi alpini, al cospetto del Re di Pietra.</p>
+            <div class="mm-hero__actions">
+                <a href="#gare" class="mm-button mm-button--solid">Scopri le gare <span>↘</span></a>
+                <a href="https://www.100migliamonviso.eu/programma/" class="mm-button mm-button--line" target="_blank" rel="noopener">Programma 2026</a>
             </div>
         </div>
+        <div class="mm-hero__date"><span>17—19</span><strong>Luglio 2026</strong></div>
+        <a class="mm-scroll" href="#gare" aria-label="Vai alle gare"><span></span>Scorri per esplorare</a>
     </header>
 
-    <main class="phm-main">
-        <section id="percorso" class="phm-section phm-course">
-            <div class="phm-section-title"><span class="phm-icon">⚑</span><h2>Il Percorso</h2></div>
-            <div class="phm-course__grid">
-                <div>
-                    <p>L’evento si snoda nel cuore di Pescara, lungo un suggestivo percorso pianeggiante e veloce che costeggia il Mare Adriatico e attraversa i luoghi simbolo della città, come il moderno Ponte del Mare.</p>
-                    <p>La manifestazione prevede il percorso della Mezza Maratona (21,097 km), la 10 km non competitiva e una passeggiata di 5 km.</p>
-                    <div class="phm-stats">
-                        <div><strong>21,097</strong><span>km competitiva</span></div>
-                        <div><strong>10</strong><span>km non competitiva</span></div>
-                        <div><strong>5</strong><span>km passeggiata</span></div>
-                    </div>
+    <main>
+        <section id="gare" class="mm-races mm-section">
+            <div class="mm-shell">
+                <div class="mm-heading">
+                    <div><p class="mm-kicker mm-kicker--dark">Scegli la tua sfida</p><h2>Quattro gare.<br>Un solo orizzonte.</h2></div>
+                    <p>Dall’ultra trail che unisce le valli alla corsa verticale ai piedi del Monviso: trova la distanza che ti somiglia.</p>
                 </div>
-                <div class="phm-course__visual" aria-label="Percorso sul lungomare di Pescara">
-                    <div class="phm-route-line"></div><span class="phm-route-pin phm-route-pin--start">START</span><span class="phm-route-pin phm-route-pin--finish">FINISH</span>
-                    <strong>Pescara<br><small>Mare Adriatico</small></strong>
+                <div class="mm-race-grid">
+                    <a class="mm-race mm-race--featured" href="/iscrizione?percorso=M160K">
+                        <span class="mm-race__number">01</span><div class="mm-race__tag">La regina</div>
+                        <div class="mm-race__body"><p>Saluzzo → Saluzzo</p><h3>M160K</h3><div class="mm-race__stats"><strong>160 <small>km</small></strong><strong>9.000 <small>D+</small></strong></div></div>
+                        <div class="mm-race__foot"><span>17 luglio · ore 21:00</span><b>↗</b></div>
+                    </a>
+                    <a class="mm-race" href="/iscrizione?percorso=M50K">
+                        <span class="mm-race__number">02</span><div class="mm-race__body"><p>Melle → Saluzzo</p><h3>M50K</h3><div class="mm-race__stats"><strong>50 <small>km</small></strong><strong>3.000 <small>D+</small></strong></div></div>
+                        <div class="mm-race__foot"><span>18 luglio · ore 15:00</span><b>↗</b></div>
+                    </a>
+                    <a class="mm-race" href="/iscrizione?percorso=M20K">
+                        <span class="mm-race__number">03</span><div class="mm-race__body"><p>Verzuolo → Saluzzo</p><h3>M20K</h3><div class="mm-race__stats"><strong>20 <small>km</small></strong><strong>1.000 <small>D+</small></strong></div></div>
+                        <div class="mm-race__foot"><span>19 luglio 2026</span><b>↗</b></div>
+                    </a>
+                    <a class="mm-race mm-race--image" href="/iscrizione?percorso=MTRAIL">
+                        <span class="mm-race__number">04</span><div class="mm-race__body"><p>Crissolo</p><h3>MTRAIL</h3><div class="mm-race__stats"><strong>26 <small>km</small></strong><strong>1.900 <small>D+</small></strong></div></div>
+                        <div class="mm-race__foot"><span>30 agosto 2026</span><b>↗</b></div>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="quote" class="phm-section phm-pricing-section">
-            <div class="phm-section-title"><span class="phm-icon">♢</span><h2>Scegli la tua quota</h2></div>
-            <p class="phm-section-lead">Seleziona la categoria più adatta a te e completa l’iscrizione in pochi minuti.</p>
-            <div class="phm-pricing-grid">
-                <article class="phm-price-card phm-price-card--featured">
-                    <div class="phm-card-topline"><span>Competitiva</span><span class="phm-status">Iscrizioni aperte</span></div>
-                    <h3>21KM Competitiva</h3><p>La gara principale. Tessera FIDAL o Runcard e certificato medico agonistico richiesti.</p>
-                    <div class="phm-price"><span>€</span><strong>30</strong><small>,00 / persona</small></div>
-                    <ul><li>✓ Percorso omologato 21,097 km</li><li>✓ Pacco gara e medaglia</li><li>✓ Pettorale con chip</li></ul>
-                    <a href="/iscrizione?percorso=21KM%20Competitiva" class="phm-btn phm-btn--blue">Iscriviti ora</a>
-                </article>
-                <article class="phm-price-card">
-                    <div class="phm-card-topline"><span>Non competitiva</span><span class="phm-status">Promo</span></div>
-                    <h3>10KM non Competitiva</h3><p>Dieci chilometri per vivere il lungomare di Pescara al proprio ritmo.</p>
-                    <div class="phm-price"><span>€</span><strong>10</strong><small>,00 / persona</small></div>
-                    <ul><li>✓ Aperta a runner e appassionati</li><li>✓ Pacco gara incluso</li><li>✓ Assistenza sul percorso</li></ul>
-                    <a href="/iscrizione?percorso=10KM%20non%20Competitiva" class="phm-btn phm-btn--blue">Iscriviti ora</a>
-                </article>
-                <article class="phm-price-card">
-                    <div class="phm-card-topline"><span>Passeggiata</span><span class="phm-status">Per tutti</span></div>
-                    <h3>5KM Passeggiata</h3><p>Una passeggiata sul percorso dell’evento, aperta a famiglie e accompagnatori.</p>
-                    <div class="phm-price"><span>€</span><strong>5</strong><small>,00 / persona</small></div>
-                    <ul><li>✓ Percorso accessibile</li><li>✓ Atmosfera dell’evento</li><li>✓ Nessuna tessera richiesta</li></ul>
-                    <a href="/iscrizione?percorso=5KM%20Passeggiata" class="phm-btn phm-btn--blue">Iscriviti ora</a>
-                </article>
+        <section class="mm-manifesto mm-section">
+            <div class="mm-shell mm-manifesto__grid">
+                <div class="mm-manifesto__image"><span>44.67° N<br>7.09° E</span></div>
+                <div class="mm-manifesto__copy">
+                    <p class="mm-kicker mm-kicker--dark">La sfida di Terres Monviso</p>
+                    <h2>Qui la montagna non fa da sfondo. <em>È protagonista.</em></h2>
+                    <p>Due vallate alpine, atleti da tutto il mondo, rifugi e comunità uniti in un grande weekend di sport. La 100 Miglia Monviso è un’esperienza collettiva che attraversa la Valle Po, la Valle Bronda e la Valle Varaita.</p>
+                    <div class="mm-facts"><div><strong>3</strong><span>vallate</span></div><div><strong>42h</strong><span>tempo limite</span></div><div><strong>20+</strong><span>comuni coinvolti</span></div></div>
+                    <a class="mm-arrow-link" href="https://www.100migliamonviso.eu/programma/" target="_blank" rel="noopener">Vivi l’esperienza <span>→</span></a>
+                </div>
             </div>
         </section>
 
-        <section class="phm-section phm-action-grid">
-            <article class="phm-action-card phm-action-card--navy"><span>Per gruppi e società</span><h3>Iscrivi la tua società sportiva</h3><p>Inserisci più atleti e completa un unico pagamento cumulativo per tutta la squadra.</p><a href="/iscrizione" class="phm-text-link">Crea iscrizione societaria →</a></article>
-            <article class="phm-action-card phm-action-card--blue"><span>Per iscritti</span><h3>Hai già una prenotazione?</h3><p>Contatta lo staff per documenti, ricevute, pettorali e assistenza sulla tua iscrizione.</p><a href="/contattaci" class="phm-text-link">Gestisci la tua iscrizione →</a></article>
-        </section>
-
-        <section class="phm-section phm-how">
-            <div class="phm-section-title"><span class="phm-icon">✓</span><h2>Come funziona</h2></div>
-            <div class="phm-steps">
-                <article><b>1</b><h3>Scegli la quota</h3><p>Seleziona la distanza e compila i dati dell’atleta.</p></article>
-                <article><b>2</b><h3>Completa l’iscrizione</h3><p>Aggiungi i partecipanti e scegli il metodo di pagamento.</p></article>
-                <article><b>3</b><h3>Ricevi la conferma</h3><p>Troverai il riepilogo e il biglietto direttamente via email.</p></article>
-                <article><b>4</b><h3>Preparati a correre</h3><p>Porta con te la conferma il giorno dell’evento.</p></article>
+        <section id="gallery" class="mm-gallery mm-section">
+            <div class="mm-shell">
+                <div class="mm-heading mm-heading--light"><div><p class="mm-kicker">Dentro la sfida</p><h2>Polvere. Roccia.<br>Respiro.</h2></div><a class="mm-arrow-link" href="https://www.100migliamonviso.eu/gallery/" target="_blank" rel="noopener">Esplora la gallery <span>→</span></a></div>
+                <div class="mm-gallery__grid">
+                    <figure class="mm-gallery__wide"><img src="/images/monviso/runner.jpg" alt="Trail runner sui sentieri del Monviso" loading="lazy"><figcaption><span>Valle Varaita</span><b>Il sentiero chiama</b></figcaption></figure>
+                    <figure><img src="/images/monviso/gallery-1.jpg" alt="Atleta in gara sui sentieri alpini" loading="lazy"></figure>
+                    <figure><img src="/images/monviso/gallery-2.jpg" alt="Passaggio di un atleta durante la 100 Miglia Monviso" loading="lazy"></figure>
+                    <figure><img src="/images/monviso/gallery-3.jpg" alt="Panorama di gara nelle Terres Monviso" loading="lazy"></figure>
+                </div>
             </div>
         </section>
 
-        <section id="sponsor" class="phm-section phm-sponsors">
-            <div class="phm-section-title"><span class="phm-icon">♢</span><h2>I Nostri Sponsor</h2></div>
-            <p class="phm-section-lead">Ringraziamo le aziende e le istituzioni che rendono possibile Pescara Half Marathon 2027.</p>
-            <div class="phm-sponsor-grid">
-                <img src="/images/pescara/sponsor-pienne.jpg" alt="Pienne" loading="lazy"><img src="/images/pescara/sponsor-di-francesco.png" alt="Di Francesco Auto" loading="lazy"><img src="/images/pescara/sponsor-di-vincenzo.png" alt="Di Vincenzo" loading="lazy"><img src="/images/pescara/sponsor-massigen.png" alt="Massigen" loading="lazy"><img src="/images/pescara/sponsor-oropuro.png" alt="Oropuro" loading="lazy"><img src="/images/pescara/sponsor-sisofo.png" alt="Sisofo" loading="lazy">
-            </div>
+        <section class="mm-values mm-section">
+            <div class="mm-shell"><p class="mm-kicker mm-kicker--dark">Più di una gara</p><div class="mm-values__grid">
+                <h2>Lascia solo<br>le tue impronte.</h2>
+                <div><span class="mm-value-icon">◎</span><h3>Ambiente</h3><p>Aderiamo alla campagna “Io non getto i miei rifiuti” e promuoviamo un modo responsabile di vivere il territorio.</p></div>
+                <div><span class="mm-value-icon">△</span><h3>Territorio</h3><p>Una rete di borghi, rifugi, associazioni e volontari rende possibile ogni chilometro della sfida.</p></div>
+            </div></div>
+        </section>
+
+        <section class="mm-cta">
+            <div class="mm-cta__bg" aria-hidden="true"></div><div class="mm-cta__veil" aria-hidden="true"></div>
+            <div class="mm-shell mm-cta__content"><p class="mm-kicker">La sfida è aperta</p><h2>Il Monviso<br>ti aspetta.</h2><p>Scegli la tua distanza e preparati a vivere la montagna da una prospettiva nuova.</p><a class="mm-button mm-button--solid" href="/iscrizione">Iscriviti ora <span>↗</span></a></div>
         </section>
     </main>
 @endsection
-
-@push('scripts')<script src="/homepage-countdown.js?v=3.0"></script>@endpush

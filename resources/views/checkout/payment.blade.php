@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento - Pescara Half Marathon 2027</title>
+    <title>Pagamento | 100 Miglia Monviso 2026</title>
     <link rel="stylesheet" href="{{ asset('css/style.css?v=1.8') }}">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
@@ -56,11 +56,11 @@
             appearance: {
                 theme: 'stripe',
                 variables: {
-                    colorPrimary: '#c64735',
+                    colorPrimary: '#168f94',
                     colorBackground: '#ffffff',
                     colorText: '#191d2f',
-                    colorDanger: '#9e3027',
-                    fontFamily: '"Barlow Condensed", sans-serif',
+                    colorDanger: '#991b1b',
+                    fontFamily: '"Manrope", sans-serif',
                     borderRadius: '6px',
                     spacingUnit: '5px',
                 },
@@ -71,8 +71,8 @@
                         fontSize: '20px',
                     },
                     '.Input:focus': {
-                        border: '1px solid #c64735',
-                        boxShadow: '0 0 0 1px #c64735',
+                        border: '1px solid #168f94',
+                        boxShadow: '0 0 0 1px #168f94',
                     },
                     '.Label': {
                         fontSize: '20px',

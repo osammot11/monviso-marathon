@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Biglietto Pescara Half Marathon 2027</title>
+    <title>Pettorale 100 Miglia Monviso 2026</title>
     <style>
         body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; }
         .ticket-container { border: 2px dashed #000; padding: 20px; margin: 20px auto; max-width: 600px; text-align: center; }
@@ -16,17 +16,18 @@
 
     <div class="ticket-container">
         <div class="header">
-            Pescara Half Marathon 2027
+            100 Miglia Monviso 2026
         </div>
         
         <div class="details">
             <p><strong>Partecipante:</strong> {{ $ticket->first_name }} {{ $ticket->last_name }}</p>
+            <p><strong>Gara:</strong> {{ $ticket->route_choice }}</p>
             <p><strong>Taglia Maglia:</strong> {{ $ticket->tshirt_size }}</p>
             <p><strong>Gruppo/Ordine:</strong> {{ $ticket->order->group_code }}</p>
         </div>
 
         <div class="ticket-code">
-            CODICE BIGLIETTO <br>
+            CODICE PETTORALE <br>
             <span style="color: #d32f2f;">{{ $ticket->unique_ticket_code }}</span>
         </div>
 

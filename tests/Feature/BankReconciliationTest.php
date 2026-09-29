@@ -71,12 +71,12 @@ class BankReconciliationTest extends TestCase
 
     private function makeOrder(): Order
     {
-        $category = EventCategory::where('name', '21KM Competitiva')->firstOrFail();
+        $category = EventCategory::where('name', 'M20K')->firstOrFail();
         $order = Order::create([
-            'group_code' => 'PHM_RECON_'.uniqid(), 'booking_code' => 'MAR2027-'.strtoupper(substr(uniqid(), -5)),
+            'group_code' => 'MM26_RECON_'.uniqid(), 'booking_code' => 'MON26-'.strtoupper(substr(uniqid(), -5)),
             'total_amount' => 30, 'payment_method' => 'bank_transfer', 'status' => 'awaiting_transfer',
             'payment_contact_name' => 'Referente', 'payment_contact_email' => 'ref@example.it',
-            'bank_reference' => 'PHM27-'.strtoupper(substr(uniqid(), -5)),
+            'bank_reference' => 'MM26-'.strtoupper(substr(uniqid(), -5)),
             'created_at' => '2026-08-17 10:00:00', 'payment_due_at' => '2026-08-22 10:00:00',
         ]);
         $order->tickets()->create([

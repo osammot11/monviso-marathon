@@ -2,13 +2,13 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prenotazione {{ $order->booking_code }} · Pescara Half Marathon</title>
+    <title>Prenotazione {{ $order->booking_code }} · 100 Miglia Monviso</title>
     <link rel="stylesheet" href="{{ asset('css/style.css?v=1.9') }}">
 </head>
 <body class="checkout-body">
 <main class="booking-page stack-large">
     <div class="booking-header">
-        <a href="/" class="checkout-logo"><img src="/images/pescara/logo.png" alt="Pescara Half Marathon 2027"></a>
+        <a href="/" class="checkout-logo"><img src="/images/monviso/logo.png" alt="100 Miglia Monviso"></a>
         <div><small>PRENOTAZIONE</small><h1>{{ $order->booking_code }}</h1><p>{{ $order->payment_contact_name }} · {{ $order->tickets->count() }} partecipanti</p></div>
         @php($statusLabels = ['awaiting_transfer' => 'In attesa del bonifico', 'transfer_review' => 'In verifica', 'paid' => 'Pagato', 'expired' => 'Scaduto', 'cancelled' => 'Annullato'])
         <span class="status-badge status-{{ $order->status }}">{{ $statusLabels[$order->status] ?? $order->status }}</span>

@@ -30,9 +30,9 @@ class SendTicketEmail implements ShouldQueue
 
         $htmlContent = "
             <h2>Ciao {$this->ticket->first_name}, iscrizione confermata!</h2>
-            <p>La tua partecipazione alla Pescara Half Marathon 2027 è ufficiale.</p>
-            <p>Puoi accedere alla tua area riservata per scaricare il tuo biglietto nominale in PDF in qualsiasi momento:</p>
-            <p><a href='{$thankYouLink}' style='padding: 10px 20px; background-color: #c64735; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;'>Scarica il tuo Biglietto</a></p>
+            <p>La tua partecipazione alla 100 Miglia Monviso 2026 è ufficiale.</p>
+            <p>Puoi accedere alla tua area riservata per scaricare il pettorale nominale in PDF in qualsiasi momento:</p>
+            <p><a href='{$thankYouLink}' style='padding: 10px 20px; background-color: #168f94; color: white; text-decoration: none; display: inline-block; margin-top: 10px;'>Scarica il tuo pettorale</a></p>
             <p>A presto!</p>
 
             <p>Se non riesci ad aprire il biglietto, copia e incolla nel browser questo link:</p>
@@ -62,7 +62,7 @@ class SendTicketEmail implements ShouldQueue
                         $this->ticket->last_name,
                 ],
             ],
-            "subject" => "Iscrizione confermata - Pescara Half Marathon 2027",
+            "subject" => "Iscrizione confermata - 100 Miglia Monviso 2026",
             "htmlContent" => $htmlContent,
         ]);
 

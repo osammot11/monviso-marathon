@@ -93,7 +93,7 @@ class BankReconciliationService
 
     public function match(BankTransaction $transaction): string
     {
-        preg_match('/PHM27-[A-Z0-9]{5}/i', $transaction->description, $matches);
+        preg_match('/MM26-[A-Z0-9]{5}/i', $transaction->description, $matches);
         if (empty($matches[0])) {
             $transaction->update(['match_status' => 'unmatched']);
             return 'unmatched';

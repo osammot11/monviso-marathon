@@ -15,8 +15,8 @@ class BrevoMailer
             'Accept' => 'application/json',
         ])->post('https://api.brevo.com/v3/smtp/email', [
             'sender' => [
-                'name' => env('BREVO_SENDER_NAME', 'Pescara Half Marathon'),
-                'email' => env('BREVO_SENDER_EMAIL', 'info@pescarahalfmarathon.it'),
+                'name' => env('BREVO_SENDER_NAME', '100 Miglia Monviso'),
+                'email' => env('BREVO_SENDER_EMAIL', 'info@100migliamonviso.eu'),
             ],
             'to' => [['email' => $email, 'name' => $name]],
             'subject' => $subject,
